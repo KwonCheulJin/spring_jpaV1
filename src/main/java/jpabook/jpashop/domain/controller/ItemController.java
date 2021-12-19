@@ -4,6 +4,7 @@ import java.util.List;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.service.ItemService;
+import jpabook.jpashop.service.UpdateItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,17 +64,21 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/edit")
-    public String updateForm(@PathVariable String itemId, @ModelAttribute("form") BookForm form) {
+    public String updateForm(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
 
-        Book book = new Book();
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+        UpdateItemDto itemDto = new UpdateItemDto();
+        itemDto.setName(form.getName());
+        itemDto.setPrice(form.getPrice());
+        itemDto.setStockQuantity(form.getStockQuantity());
 
-        itemService.saveItem(book);
+        itemService.updateItem(itemId, itemDto);
         return "redirect:/items";
 
     }
